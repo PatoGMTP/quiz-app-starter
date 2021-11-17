@@ -8,8 +8,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="quiztop">
+        <h1 id="quiztitle">TEMP TITLE</h1>
+    </div>
+
+    <div id="quizbody" hidden>
+        <p id="stats"></p>
+        <h3 id="prompt"></h3>
+        <form id="choices"></form>
+        <button id="respond">SUBMIT!</button>
+    </div>
+
+    <button id="start">START!</button>
+    <button id="retry">RETRY!</button>
+    <button id="exit">EXIT!</button>
+    <button id="build">EDIT!</button>
+
+    <div id="builder" hidden>
+        <ol type="1" id="existing"></ol>
+    </div>
+    
+    <p id="score"></p>
+    <ol type="1" id="results"></ol>
     <!--Your quiz layout goes here-->
-    <script src="questions.js"></script>
-    <script src="quiz.js"></script>
+    <script type="module" src="questions.js"></script>
+    <script type="module" src="quiz.js"></script>
 </body>
 </html>

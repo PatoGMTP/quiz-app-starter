@@ -1,5 +1,15 @@
 /* Your styles for the mobile/small screen view of the quiz go here*/
 
+.correct
+{
+	background-color: rgb(136, 201, 136);
+}
+
+.wrong
+{
+	background-color: rgb(207, 145, 145);
+}
+
 
 
 @media all and (min-width: 600px){
