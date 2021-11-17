@@ -1,5 +1,6 @@
 //Your quiz functionality goes here
-import { quiz } from "./questions.js";
+import { quiz, questionC } from "./questions.js";
+import { displayExistingQuestions } from "./builder.js";
 
 let question;
 let current = -1;
@@ -16,11 +17,18 @@ let quiz_retry_button;
 let quiz_body;
 let quiz_exit_button;
 let quiz_build_button;
+let existing_question_list;
+let quiz_builder_body;
+let builder_add_button;
+let builder_add_form;
+let builder_create_button;
 
 let responses = [];
 
 function main()
 {
+    console.log("LOADED!");
+
     quiz_title = document.getElementById("quiztitle");
     quiz_stats = document.getElementById("stats");
     quiz_prompt = document.getElementById("prompt");
@@ -33,6 +41,11 @@ function main()
     quiz_body = document.getElementById("quizbody");
     quiz_exit_button = document.getElementById("exit");
     quiz_build_button = document.getElementById("build");
+    existing_question_list = document.getElementById("existing");
+    quiz_builder_body = document.getElementById("builder");
+    builder_add_button = document.getElementById("addquestion");
+    builder_add_form = document.getElementById("newquestion");
+    builder_create_button = document.getElementById("submitnewquestion")
 
     quiz_respond_button.addEventListener("click", nextQuestion);
 
@@ -42,7 +55,63 @@ function main()
 
     quiz_exit_button.addEventListener("click", exitQuiz);
 
-    quiz_build_button.addEventListener("click", console.log);
+    quiz_build_button.addEventListener("click", evt => {
+        builder_add_form.style.display = "none";
+        if (evt.target.innerHTML !== "Close Edit Menu")
+        {
+            evt.target.innerHTML = "Close Edit Menu";
+            quiz_start_button.hidden = true;
+            displayExistingQuestions(quiz, existing_question_list)
+        }
+        else
+        {
+            evt.target.innerHTML = "EDIT!";
+            quiz_builder_body.hidden = true;
+            quiz_start_button.hidden = false;
+        }
+    });
+
+    builder_add_button.addEventListener("click", evt =>{
+        builder_add_form.style.display = "block";
+        console.log("ADD!");
+    });
+
+    builder_create_button.addEventListener("click", evt =>{
+        evt.preventDefault();
+        let form = evt.target.parentElement;
+        console.log(form);
+        let newp = document.getElementById("newp");
+        let newc1 = document.getElementById("newc1");
+        let newc2 = document.getElementById("newc2");
+        let newc3 = document.getElementById("newc3");
+        let newc4 = document.getElementById("newc4");
+        let newanswer = document.getElementById("newans");
+        let arr = [newc1.value, newc2.value, newc3.value, newc4.value];
+        if (arr.includes(newanswer.value))
+        {
+            if (arr.some(item=>item===""))
+            {
+                alert("Please fill in all fields!");
+            }
+            else
+            {
+                quiz.push(new questionC(newp.value, arr, newanswer.value));
+                newp.value = "";
+                newc1.value = "";
+                newc2.value = "";
+                newc3.value = "";
+                newc4.value = "";
+                newanswer.value = "";
+            }
+        }
+        else
+        {
+            alert("Please make sure answer is one of the choices!");
+        }
+
+        arr.push(newp.value);
+        arr.push(newanswer.value);
+    });
 
     quiz_title.innerHTML = "Lit Quiz!";
 
@@ -51,17 +120,24 @@ function main()
 
 function startQuiz()
 {
-    current = 0;
-    quiz_start_button.hidden = true;
-    quiz_retry_button.hidden = true;
-    quiz_build_button.hidden = true;
-    quiz_exit_button.hidden = false;
-    quiz_body.hidden = false;
-    Array.from( quiz_body.children ).forEach(item=> item.hidden = false);
-
-    shuffleArray(quiz);
-
-    render();
+    if (quiz.length > 0)
+    {
+        current = 0;
+        quiz_start_button.hidden = true;
+        quiz_retry_button.hidden = true;
+        quiz_build_button.hidden = true;
+        quiz_exit_button.hidden = false;
+        quiz_body.hidden = false;
+        Array.from( quiz_body.children ).forEach(item=> item.hidden = false);
+    
+        shuffleArray(quiz);
+    
+        render();
+    }
+    else
+    {
+        alert("You deleted all the questions! Go and make some more!");
+    }
 }
 
 function retryQuiz()
@@ -158,6 +234,7 @@ function render()
     if (current === -1)
     {
         quiz_body.hidden = true;
+        quiz_builder_body.hidden = true;
         quiz_retry_button.hidden = true;
         quiz_exit_button.hidden = true;
         quiz_build_button.hidden = false;

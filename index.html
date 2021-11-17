@@ -26,6 +26,21 @@
 
     <div id="builder" hidden>
         <ol type="1" id="existing"></ol>
+        <button id="addquestion">ADD!</button>
+        <form id="newquestion">
+            <label for="newp">Question Prompt:</label>
+            <input type="text" id="newp">
+            <ul id="newchoices">
+                <li id="newchoice1"><label for="newc1">Choice 1:</label><input type="text" id="newc1"></li>
+                <li id="newchoice2"><label for="newc2">Choice 2:</label><input type="text" id="newc2"></li>
+                <li id="newchoice3"><label for="newc3">Choice 3</label><input type="text" id="newc3"></li>
+                <li id="newchoice4"><label for="newc4">Choice 4</label><input type="text" id="newc4"></li>
+                <li id="newanswer"><label for="newanswer">Answer</label><input type="text" id="newans"></li>
+            </ul>
+            <button id="addchoice" hidden>ANOTHER CHOICE!</button>
+            <button id="removechoice" hidden>LESS CHOICES!</button>
+            <button id="submitnewquestion">CREATE!</button>
+        </form>
     </div>
     
     <p id="score"></p>

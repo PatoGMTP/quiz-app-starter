@@ -15,3 +15,8 @@
 @media all and (min-width: 600px){
 	/* Your styles for the desktop view go here */
 }
+
+label
+{
+	display: block;
+}
